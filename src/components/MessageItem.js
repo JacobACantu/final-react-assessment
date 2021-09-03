@@ -11,7 +11,7 @@ class MessageItem extends React.Component {
         return (
             <div className = "listItem">
                 <h1 className="hover" onClick={() => selectSingleMessage(message)} >{message.messageBody}</h1>
-                <p>{message.id}</p>
+                <p>{message.userName}</p>
                 <button className="btn hover" id={message.id} onClick = {handleDelete}>Delete</button>
             </div>
         )

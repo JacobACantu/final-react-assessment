@@ -1,7 +1,5 @@
-import { render } from '@testing-library/react'
 import React from 'react' 
 import MessageItem from './MessageItem'
-import Messageitem from'./MessageItem'
 
 class Messages extends React.Component {
         render() {

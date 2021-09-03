@@ -3,33 +3,52 @@ import React from 'react'
 class MessageInput extends React.Component {
 
     state = {
-        text: ''
+        userNameText: '',
+        msgBodyText: ''
     }
 
     render() {
-        const {text}= this.state
+        const {userNameText, msgBodyText}= this.state
         const {addMessage} = this.props
 
-        const handleChange = (e) => {
-            this.setState({text: e.target.value})
+        const handleChangeUserName = (e) => {
+            this.setState({userNameText: e.target.value})
+        }
+
+        const handleChangeMsgBody = (e) => {
+            this.setState({msgBodyText: e.target.value})
         }
 
         const handleSubmit = (e) => {
             e.preventDefault()
-            addMessage({messageBody: text})
-            this.setState({text: ''})
+            addMessage({userName: userNameText, messageBody: msgBodyText})
+            this.setState({userNameText: '', msgBodyText: ''})
         }
 
         return(
             <form onSubmit={handleSubmit}>
+            <div>
+                <label>User Name: </label>
                 <input type="text"
                 className="label"
-                name="text"
-                value={text}
-                onChange={handleChange}
+                placeholder="User Name"
+                value={userNameText}
+                onChange={handleChangeUserName}
                 />
-                <input type="submit" className="btn"/>
-            </form>
+            </div>
+            
+            <div>
+                <label>Message Body: </label>
+                <input type="text"
+                className="label"
+                placeholder="Message Body"
+                value={msgBodyText}
+                onChange={handleChangeMsgBody}
+                />
+            </div>
+
+            <input type="submit" className="btn"/>
+        </form>
         )
     }
 }
