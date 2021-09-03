@@ -70,7 +70,7 @@ class App extends React.Component {
 
 
     return(
-      <div className="app">
+      <div className="container">
         <h1 id="logo">Hurricane Message Board</h1>
         <MessageInput addMessage={addMessage}/>
         <Messages
