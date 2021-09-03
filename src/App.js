@@ -1,27 +1,87 @@
-import logo from './logo.svg';
+import React from 'react'
+import Messages from './components/Messages'
+import MessageInput from './components/MessageInput'
+import SingleMessage from './components/SingleMessage'
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>My messaging system.</h1>
-      {/* create functionality for following:
 
-      - Ability to create new messages
-      - Ability to click on a single message and view it with conditional rendering
-      - Ability to edit single message
-      - Ability to delete single message
+class App extends React.Component {
 
-      -- By default, the user should see the input field for creating a new message. Under the input field, all messages that have been created should appear. 
+  state= {
+    messages: [],
+    singleMessage: null
+  }
 
-      -- Techniques used: conditional rendering, controlled components, passing state as props
+  render() {
+    const {messages, singleMessage} = this.state
 
-      -- Each message should have a messageBody, a userName, and a unique ID.
 
-      -- Packages to use: axios, uuid (for creating unique id for each message).
-      */}
-    </div>
-  );
+    // add Message
+
+    const addMessage = (obj) => {
+      const id = uuidv4();
+      obj.id = id
+      this.setState({messages: [...messages, obj]})
+    }
+
+    // delete message
+
+    const deleteMessage = (id) => {
+      this.setState({messages: messages.filter(message => message.id !== id)})
+    }
+
+    // select single Message
+
+    const selectSingleMessage = (message) => {
+      this.setState({singleMessage: message})
+    }
+
+    // clear single Message
+
+    const clearSingleMessage = () => {
+      this.setState({singleMessage: null})
+    }
+
+    // edit Message
+    const editMessage = (obj) => {
+      const updatedMessages = messages.map(message => {
+        if (obj.id === message.id) {
+          message.messageBody = obj.messageBody
+        }
+        return message
+      })
+      this.setState({messages: updatedMessages})
+      this.setState({singleMessage: null})
+    }
+
+    //conditional rendering
+    if(singleMessage) {
+      return (
+        <div className="container">
+          <SingleMessage
+          singleMessage={singleMessage}
+          clearSingleMessage={clearSingleMessage}
+          editMessage={editMessage}
+          />
+        </div>
+      )
+    }
+
+
+    return(
+      <div className="app">
+        <h1 id="logo">Hurricane Message Board</h1>
+        <MessageInput addMessage={addMessage}/>
+        <Messages
+        messages={messages}
+        deleteMessage={deleteMessage}
+        selectSingleMessage={selectSingleMessage}
+        />
+      </div>
+    )
+  } 
 }
 
 export default App;
+
